@@ -1,1 +1,26 @@
 <script type="text/javascript" src="background.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+			$('#wndx-sidebar a').each(function () {
+   		 	var $this = $(this),
+        	href = $this.attr('href');
+    		$this.click(function (e, href) {
+    			console.log(e);
+            	e.preventDefault();
+        		var xhr = new XMLHttpRequest();
+        		xhr.open('GET', $this.attr('href'), true);
+
+        		xhr.send();
+        	xhr.onreadystatechange = function () {
+            	if (this.readyState !== 4) return;
+            	if (this.status !== 200) return;
+    		var wndxInfo = document.getElementById('wndx-sidebar');
+			wndxInfo.innerHTML = this.responseText.replace(/<head>/, '<head><base target="_blank" href="//wndx-test.herokuapp.com/"/>');
+
+
+		        };
+		    });
+		});
+	});
+
+</script>
